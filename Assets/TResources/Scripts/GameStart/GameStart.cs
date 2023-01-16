@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TEngine.Runtime;
 using UnityEngine;
 
-public class DemoMain : MonoBehaviour
+public class GameStart : MonoBehaviour
 {
     GameTickWatcher m_gameTimeWatcher = new GameTickWatcher();
     // Start is called before the first frame update
