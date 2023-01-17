@@ -33,6 +33,10 @@ public class ZZUISceneBase : ZZUIScenePort
 
     }
 
+    public override void SetObjs(object[] objs){
+        this.objs = objs;
+    }
+
     //scenemanager中管理
     public override void OnHideUI()
     {

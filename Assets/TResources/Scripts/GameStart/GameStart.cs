@@ -24,9 +24,12 @@ public class GameStart : MonoBehaviour
         LoadGameNeed();
     }
     
+    List<string> ss = new List<string>();
+
     //加载游戏所需
     public void LoadGameNeed() {
-        TResources.Load<GameObject>("Gamee");        
+        ZZSceneManager.Instance.ChooseScene(ZZSceneName.Scene_Test,null,"传递","传递2",3);    
+    
     }
 
     // Update is called once per frame

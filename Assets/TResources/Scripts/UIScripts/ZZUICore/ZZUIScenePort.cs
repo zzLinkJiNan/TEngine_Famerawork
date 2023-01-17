@@ -8,10 +8,13 @@ public abstract class ZZUIScenePort : MonoBehaviour
     public Transform skinTr;
 
     //初始化传递参数
-    public object[] objs;
+    public object[] objs = new object[]{};
 
     //初始化
     public abstract void Ini();
+
+    //初始化scene传递参数
+    public abstract void SetObjs(object[] objs);
 
     //传递初始化参数
     public abstract void Iniparameter();

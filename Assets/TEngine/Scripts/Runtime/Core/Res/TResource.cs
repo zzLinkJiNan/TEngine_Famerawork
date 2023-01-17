@@ -105,7 +105,6 @@ namespace TEngine.Runtime
                 Log.Error("Resources helper is invalid.");
                 return;
             }
-
             m_ResourceHelper.LoadAsync<T>(path, callBack, withSubAsset);
         }
 
