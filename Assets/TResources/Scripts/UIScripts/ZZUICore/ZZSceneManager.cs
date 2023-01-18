@@ -18,13 +18,15 @@ public class ZZSceneManager : UnitySingleton<ZZSceneManager>
     public void ChooseScene(ZZSceneName sceneName,Action<string> action = null,params object[] objs){
         //选择一个 scene 要干掉之前的 scene 加载新的 scene
         if(currentScene == null && sceneWareHouse.Count == 0)
-            createScene(sceneName,objs);
+            createScene(sceneName,action,objs);
         else if(currentScene != null && sceneWareHouse.Count > 0)
         {
             Destroy(currentScene.gameObject);
-            createScene(sceneName,objs);
+            createScene(sceneName,action,objs);
         }
-        action?.Invoke("切换scene成功!");
+    }
+    public void ChooseScene(ZZSceneName sceneName,params object[] objs){
+        ChooseScene(sceneName,null,objs);
     }
 
     //切回到上个SceneUI
@@ -40,7 +42,7 @@ public class ZZSceneManager : UnitySingleton<ZZSceneManager>
     }
 
     //创建一个scene
-    private void createScene(ZZSceneName sceneName,object[] objs){
+    private void createScene(ZZSceneName sceneName,Action<string> action = null,params object[] objs){
 
         Transform zScene = ZZCanvasManager.Instance.ZScene;
 
@@ -53,29 +55,30 @@ public class ZZSceneManager : UnitySingleton<ZZSceneManager>
             currentScene = scene;
             //添加脚本
             var sceneScript = Type.GetType(sName);
-            //反射初始化参数方法
-            MethodInfo method = sceneScript.GetMethod("SetObjs");
-            var obj = System.Activator.CreateInstance(sceneScript);
-
-            method.Invoke(obj,new object[]{objs});
-
-            scene.SearchGet<Transform>(sName).gameObject.AddComponent(obj.GetType());
-            
-            
+            ZZUISceneBase aa = scene.SearchGet<Transform>(sName).gameObject.AddComponent(sceneScript) as ZZUISceneBase;
+            aa.enabled = false;
+            //脚本赋值
+            aa.objs = objs;
+            aa.ac = action;
+            aa.enabled = true;
         });
     }
     
     //显示当前Scene
     public void ShowScene(){
-        if(currentScene!=null)
+        if(currentScene!=null){
             currentScene.gameObject.SetActive(true);
+            currentScene.SearchGet<Transform>(sceneWareHouse[sceneWareHouse.Count-1].ToString()).GetComponent<ZZUISceneBase>().OnShowUI();
+        }
         else
             TLogger.LogInfo("未找到当前Scene 无法显示");
     }
     //隐藏当前Scene
     public void HideScene(){
-        if(currentScene!=null)
+        if(currentScene!=null){
             currentScene.gameObject.SetActive(false);
+            currentScene.SearchGet<Transform>(sceneWareHouse[sceneWareHouse.Count-1].ToString()).GetComponent<ZZUISceneBase>().OnHideUI();
+        }
         else
             TLogger.LogInfo("未找到当前Scene 无法隐藏");
     }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ZZUISceneBase : ZZUIScenePort
 {
@@ -8,33 +9,32 @@ public class ZZUISceneBase : ZZUIScenePort
     private void Update() {OnUpdateUI();}
     private void OnDestroy() {OnChangeScene();}
 
-    //Scene初始化栈
+    //Scene初始化流程
     public override void Ini()
     {
         IniDeploy();
         Iniparameter();
         SetModles();
         OnAddEvent();
+        OnShowed();
     }
 
     public override void IniDeploy()
     {
-        
+        skinTr = transform;
+        mainMask = transform.parent.Find("mainMask").GetComponent<Image>();
+        mainMask.color = maskColor;
+        mainMask.enabled = maskIsOn;
     }
 
     public override void Iniparameter()
     {
-        if(objs.Length<=0)
-            return;
+        
     }
 
     public override void OnChangeScene()
     {
 
-    }
-
-    public override void SetObjs(object[] objs){
-        this.objs = objs;
     }
 
     //scenemanager中管理
@@ -62,5 +62,20 @@ public class ZZUISceneBase : ZZUIScenePort
     public override void OnAddEvent()
     {
         
+    }
+
+    public override void OnShowed()
+    {
+        
+    }
+
+    public override void OnClicks(Transform btnClick)
+    {
+        switch (btnClick.name)
+        {
+            case "":
+
+            break;
+        }
     }
 }

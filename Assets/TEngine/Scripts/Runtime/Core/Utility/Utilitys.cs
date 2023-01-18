@@ -20,5 +20,21 @@ namespace TEngine.Runtime
         }
 
 
+        public static T GetOrAddComponent<T>(this Transform transform) where T : UnityEngine.Component{
+            T comp = transform.GetComponent<T>();
+            if(comp==null)
+                return transform.gameObject.AddComponent<T>();
+            else
+                return comp;
+        }
+
+        
+        public static T GetOrAddComponent<T>(this RectTransform transform) where T : UnityEngine.Component{
+            T comp = transform.GetComponent<T>();
+            if(comp==null)
+                return transform.gameObject.AddComponent<T>();
+            else
+                return comp;
+        }
     }
 }
