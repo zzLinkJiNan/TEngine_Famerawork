@@ -128,8 +128,8 @@ public class #类名# : ZZUISceneBase
                     + " = skinTr.SearchGet<"+ cName 
                     +">(\""+childrens[i].name+"\");" + "\n";
                     成员变量定义 += cName + " " + childrens[i].name + ";";
-                    if(cName == "Button"){
-                        点击事件装载 += "case \"" + childrens[i].name + "\":\n\nbreak;\n";
+                    if(cName == "UIEventListener"){
+                        点击事件装载 += "case \"" + childrens[i].name + "\":\n\nbreak;\n\t";
                     }
                 }
             }
@@ -177,7 +177,7 @@ public class #类名# : ZZUISceneBase
             
         }
         else if(selectobj.name.StartsWith("Panel_")){
-
+                    
         }
         else
             TLogger.LogInfo("请选择Panel_ | Scene_ 来创建UI套装");
