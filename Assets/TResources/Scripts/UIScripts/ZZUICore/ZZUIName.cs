@@ -1,12 +1,12 @@
-public enum ZZSceneName{
+﻿public enum ZZSceneName{
         Scene_Test,
         TestName,
-        LastFind,
+        SLastFind,
 }
 
 public enum ZZPanelName{
         TestName,
-        LastFind,
+        PLastFind,
 }
 
 
