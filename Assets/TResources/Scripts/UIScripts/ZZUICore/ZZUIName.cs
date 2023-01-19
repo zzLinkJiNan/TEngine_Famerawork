@@ -8,7 +8,8 @@ SLastFind,
 
 public enum ZZPanelName{
         TestName,
-        PLastFind,
+Panel_lalala,
+PLastFind,
 }
 
 

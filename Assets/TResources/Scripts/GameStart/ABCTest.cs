@@ -23,6 +23,12 @@ public class ABCTest : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.C)){
             ZZSceneManager.Instance.cutUpScene();
         }
+        if(Input.GetKeyDown(KeyCode.V)){
+            ZZPanelManager.Instance.CreatePanel(ZZPanelName.Panel_lalala);
+        }
+        if(Input.GetKeyDown(KeyCode.B)){
+            ZZPanelManager.Instance.ClosePanel(ZZPanelName.Panel_lalala);
+        }
     }
 }
 

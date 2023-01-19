@@ -11,6 +11,7 @@ public class ZZUIEditorCreate
 
     public static string SceneClassStr =
 @"using System.Collections;
+
 using System.Collections.Generic;
 using UnityEngine;
 using TEngine.Runtime;
@@ -41,7 +42,7 @@ public class #类名# : ZZUISceneBase
     //组件赋值
     public override void SetModles()
     {
-        #组件赋值#
+#组件赋值#
     }
 
     //添加事件
@@ -62,7 +63,7 @@ public class #类名# : ZZUISceneBase
     {
         switch (btnClick.name)
         {
-            #点击事件装载#
+#点击事件装载#
         }
     }
 
@@ -81,6 +82,75 @@ public class #类名# : ZZUISceneBase
     }
 }
 ";
+    
+    public static string PanelClassStr =
+@"using System.Collections;
+
+using System.Collections.Generic;
+using UnityEngine;
+using TEngine.Runtime;
+using DG.Tweening;
+using UnityEngine.UI;
+
+public class #类名# : ZZUIPanelBase
+{
+    //----------成员组件 | 变量-----------
+    #成员变量定义#
+    //----------↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑-----------
+
+    //初始化配置
+    public override void IniDeploy()
+    {
+        maskIsOn = false; //遮罩是否打开
+        maskColor = new Color(0,0,0,0); //遮罩颜色 RGBA : 0~1
+        clickClose = false; //点击其他地方关闭当前panel
+        base.IniDeploy();
+    }
+	
+    //初始化参数
+    public override void Iniparameter(){
+        if(objs.Length>0){
+            
+        }
+    }
+
+    //组件赋值
+    public override void SetModles()
+    {
+#组件赋值#
+    }
+
+    //添加事件
+    public override void OnAddEvent()
+    {
+        
+    }
+
+    //update
+    public override void OnUpdateUI()
+    {
+        base.OnUpdateUI();
+        
+    }
+
+    //点击事件装载
+    public override void OnClicks(Transform btnClick)
+    {
+        switch (btnClick.name)
+        {
+#点击事件装载#
+        }
+    }
+
+    //Panel完成显示后
+    public override void OnShowed()
+    {
+        base.OnShowed();
+
+    }
+}
+";
+    
     //返回组件前缀
     public static string prefixReturnFullName(string cName){
         switch (cName)
@@ -124,12 +194,12 @@ public class #类名# : ZZUISceneBase
                 string cName = prefixReturnFullName(childrens[i].name.Split('_')[0]);
                 if(cName!="")
                 {
-                    组件赋值 += childrens[i].name 
+                    组件赋值 += "\t\t"+childrens[i].name 
                     + " = skinTr.SearchGet<"+ cName 
                     +">(\""+childrens[i].name+"\");" + "\n";
                     成员变量定义 += cName + " " + childrens[i].name + ";";
                     if(cName == "UIEventListener"){
-                        点击事件装载 += "case \"" + childrens[i].name + "\":\n\nbreak;\n\t";
+                        点击事件装载 += "\t\t\tcase \"" + childrens[i].name + "\":\n\t\t\t\t\n\t\t\tbreak;\n";
                     }
                 }
             }
@@ -177,7 +247,77 @@ public class #类名# : ZZUISceneBase
             
         }
         else if(selectobj.name.StartsWith("Panel_")){
-                    
+            string panelScriptStr = PanelClassStr;
+
+            string scriptPath = Application.dataPath + "/TResources/Scripts/UIScripts/Panel/" + selectobj.name + ".cs";
+
+            string enumNameScriptPath = Application.dataPath + "/TResources/Scripts/UIScripts/ZZUICore/ZZUIName.cs";
+
+            string 组件赋值 = "";
+
+            string 成员变量定义 = "";
+
+            string 点击事件装载 = "";
+
+            for (int i = 0; i < childrens.Length; i++)
+            {
+                string cName = prefixReturnFullName(childrens[i].name.Split('_')[0]);
+                if(cName!="")
+                {
+                    组件赋值 += "\t\t"+ childrens[i].name 
+                    + " = skinTr.SearchGet<"+ cName 
+                    +">(\""+childrens[i].name+"\");" + "\n";
+                    成员变量定义 += cName + " " + childrens[i].name + ";";
+                    if(cName == "UIEventListener"){
+                        if(childrens[i].name.Equals("Btn_Close"))
+                        {
+                            点击事件装载 += "\t\t\tcase \"" + childrens[i].name + "\":\n\t\t\t\tOnClose();\n\t\t\tbreak;\n\t";
+                            continue;
+                        }
+                        点击事件装载 += "\t\tcase \"" + childrens[i].name + "\":\n\t\t\t\t\n\t\t\tbreak;\n\t";
+                    }
+                }
+            }
+
+            panelScriptStr = panelScriptStr.Replace("#组件赋值#",组件赋值);
+            panelScriptStr = panelScriptStr.Replace("#成员变量定义#",成员变量定义);
+            panelScriptStr = panelScriptStr.Replace("#点击事件装载#",点击事件装载);
+            panelScriptStr = panelScriptStr.Replace("#类名#",selectobj.name);
+            
+            FileStream scriptFile = new FileStream(scriptPath, FileMode.CreateNew);
+            StreamWriter fileWrite = new StreamWriter(scriptFile, System.Text.Encoding.UTF8);
+
+            //读取并写入Enum
+            string enumScriptStr = File.ReadAllText(enumNameScriptPath,System.Text.Encoding.UTF8);
+            enumScriptStr = enumScriptStr.Replace("PLastFind",selectobj.name+",\nPLastFind");
+            
+            FileStream enumNameScriptFile = new FileStream(enumNameScriptPath,FileMode.Create);
+            StreamWriter enumScriptWrite = new StreamWriter(enumNameScriptFile, System.Text.Encoding.UTF8);
+
+
+            fileWrite.Write(panelScriptStr);
+            enumScriptWrite.Write(enumScriptStr);
+
+
+            fileWrite.Flush();
+            enumScriptWrite.Flush();
+            fileWrite.Close();
+            scriptFile.Close();
+            enumScriptWrite.Close();
+            enumNameScriptFile.Close();
+
+            //创建Prefab
+            string prefabPath = "Assets/TResources/Prefabs/UIMainPrefabs/Panels/"+selectobj.name + ".prefab";
+
+            bool createPrefabSucceed = false;  
+            PrefabUtility.SaveAsPrefabAsset(selectobj,prefabPath,out createPrefabSucceed);
+
+            if(createPrefabSucceed) 
+                TLogger.LogInfo("创建panel预制体成功!"+prefabPath);
+
+            TLogger.LogInfo("创建脚本 " + scriptPath + ".cs 成功!");
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();                
         }
         else
             TLogger.LogInfo("请选择Panel_ | Scene_ 来创建UI套装");

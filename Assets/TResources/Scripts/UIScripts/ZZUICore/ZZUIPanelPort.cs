@@ -38,15 +38,15 @@ public abstract class ZZUIPanelPort : MonoBehaviour
     //update
     public abstract void OnUpdateUI();
 
-    //切换Scene
-    public abstract void OnChangeScene();
-
-    //隐藏Scene
+    //隐藏Panel
     public abstract void OnHideUI();
 
-    //显示Scene
+    //显示Panel
     public abstract void OnShowUI();
     
+    //干掉Panel
+    public abstract void OnClose();
+
     //添加事件
     public abstract void OnAddEvent();
 
