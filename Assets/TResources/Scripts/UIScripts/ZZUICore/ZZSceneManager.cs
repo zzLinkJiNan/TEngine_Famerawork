@@ -48,20 +48,27 @@ public class ZZSceneManager : UnitySingleton<ZZSceneManager>
 
         string sName = sceneName.ToString();
 
-        TResources.LoadAsync<GameObject>("Prefabs/UIMainPrefabs/Scenes/"+sName+".prefab",sceneGo=>{
-            //实例化scene
-            Transform scene = Instantiate(sceneGo,zScene).transform;
-            sceneWareHouse.Add(sceneName);
-            currentScene = scene;
-            //添加脚本
-            var sceneScript = Type.GetType(sName);
-            ZZUISceneBase aa = scene.SearchGet<Transform>(sName).gameObject.AddComponent(sceneScript) as ZZUISceneBase;
-            aa.enabled = false;
-            //脚本赋值
-            aa.objs = objs;
-            aa.ac = action;
-            aa.enabled = true;
+        TResources.LoadAsync<GameObject>("Prefabs/UIMainPrefabs/MainCanvas/Scene_Base.prefab",sceneBase=>{
+            //实例化sceneBase
+            Transform sceneB = Instantiate(sceneBase,zScene).transform;
+            sceneB.name = sName;
+            TResources.LoadAsync<GameObject>("Prefabs/UIMainPrefabs/Scenes/"+sName+".prefab",sceneGo=>{
+                //实例化该scene
+                Transform scene = Instantiate(sceneGo,sceneB).transform;
+                scene.name = sName;
+                sceneWareHouse.Add(sceneName);
+                currentScene = scene;
+                //添加脚本
+                var sceneScript = Type.GetType(sName);
+                ZZUISceneBase aa = scene.SearchGet<Transform>(sName).gameObject.AddComponent(sceneScript) as ZZUISceneBase;
+                aa.enabled = false;
+                //脚本赋值
+                aa.objs = objs;
+                aa.ac = action;
+                aa.enabled = true;
+            });
         });
+
     }
     
     //显示当前Scene

@@ -86,7 +86,7 @@ public class #类名# : ZZUISceneBase
         switch (cName)
         {
             case "Btn":
-                return "Button";
+                return "UIEventListener";
             case "Tex":
                 return "Text";
             case "Tran":
@@ -173,7 +173,7 @@ public class #类名# : ZZUISceneBase
             TLogger.LogInfo("创建脚本 " + Application.dataPath + "/Scripts/" + selectobj.name + ".cs 成功!");
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
-
+            
             
         }
         else if(selectobj.name.StartsWith("Panel_")){

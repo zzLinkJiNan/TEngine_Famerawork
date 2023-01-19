@@ -1,7 +1,8 @@
 ﻿public enum ZZSceneName{
         Scene_Test,
         TestName,
-        SLastFind,
+        Scene_Ttest,
+SLastFind,
 }
 
 public enum ZZPanelName{
