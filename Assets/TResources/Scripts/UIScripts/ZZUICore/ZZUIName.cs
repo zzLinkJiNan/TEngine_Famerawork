@@ -2,6 +2,7 @@
         Scene_Test,
         TestName,
         Scene_Ttest,
+Scene_MyMainScene,
 SLastFind,
 }
 

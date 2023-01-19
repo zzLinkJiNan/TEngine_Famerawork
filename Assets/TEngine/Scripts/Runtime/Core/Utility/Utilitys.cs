@@ -14,8 +14,8 @@ namespace TEngine.Runtime
             {
                 if(item.name.Equals(name))
                     return item;
-            } 
-            TLogger.LogInfo("未找到子名:"+name);
+            }
+            TLogger.LogInfo("未在该类型下找到子名:"+name);
             return default;
         }
 

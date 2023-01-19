@@ -28,7 +28,9 @@ public class GameStart : MonoBehaviour
 
     //加载游戏所需
     public void LoadGameNeed() {
-        ZZSceneManager.Instance.ChooseScene(ZZSceneName.Scene_Ttest,null,"传递","传递2",3);    
+        ZZSceneManager.Instance.ChooseScene(ZZSceneName.Scene_MyMainScene,ac =>{
+            TLogger.LogInfo(ac);                
+        });    
     
     }
 

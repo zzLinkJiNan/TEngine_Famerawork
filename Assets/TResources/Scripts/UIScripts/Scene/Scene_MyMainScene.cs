@@ -5,10 +5,10 @@ using TEngine.Runtime;
 using DG.Tweening;
 using UnityEngine.UI;
 
-public class Scene_Ttest : ZZUISceneBase
+public class Scene_MyMainScene : ZZUISceneBase
 {
     //----------成员组件 | 变量-----------
-    UIEventListener Btn_close;UIEventListener Btn_close1;UIEventListener Btn_close2;UIEventListener Btn_close3;
+    UIEventListener Btn_点击按钮1;Image Img_image1;
     //----------↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑-----------
 
     //初始化配置
@@ -29,10 +29,8 @@ public class Scene_Ttest : ZZUISceneBase
     //组件赋值
     public override void SetModles()
     {
-        Btn_close = skinTr.SearchGet<UIEventListener>("Btn_close");
-        Btn_close1 = skinTr.SearchGet<UIEventListener>("Btn_close1");
-        Btn_close2 = skinTr.SearchGet<UIEventListener>("Btn_close2");
-        Btn_close3 = skinTr.SearchGet<UIEventListener>("Btn_close3");
+        Btn_点击按钮1 = skinTr.SearchGet<UIEventListener>("Btn_点击按钮1");
+Img_image1 = skinTr.SearchGet<Image>("Img_image1");
 
     }
 
@@ -40,16 +38,6 @@ public class Scene_Ttest : ZZUISceneBase
     public override void OnAddEvent()
     {
         
-
-        Btn_close.OnUpdateDown += ()=>{
-
-            TLogger.LogInfo("Btn_close 正在拖动");
-        };
-
-        Btn_close1.OnClick += ()=>{
-            Debug.Log("点击");    
-            ac?.Invoke("你好");
-        };
     }
 
     //update
@@ -64,7 +52,9 @@ public class Scene_Ttest : ZZUISceneBase
     {
         switch (btnClick.name)
         {
-            
+            case "Btn_点击按钮1":
+                Debug.Log(11);
+            break;
         }
     }
 

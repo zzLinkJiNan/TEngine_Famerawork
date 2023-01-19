@@ -33,9 +33,17 @@ public class ZZSceneManager : UnitySingleton<ZZSceneManager>
     public void cutUpScene(Action<string> action = null,params object[] objs){ 
         if(sceneWareHouse.Count>1)
         {
+            //scene1 scene2 
             ChooseScene(sceneWareHouse[sceneWareHouse.Count-2],action,objs);
-            sceneWareHouse.RemoveAt(sceneWareHouse.Count-1);
-            sceneWareHouse.RemoveAt(sceneWareHouse.Count-2);
+            foreach (var item in sceneWareHouse)
+            {
+                TLogger.LogInfo("xx : "+item.ToString());
+            }
+            sceneWareHouse.RemoveRange(sceneWareHouse.Count-2,2);
+            foreach (var item in sceneWareHouse)
+            {
+                TLogger.LogInfo(item.ToString());
+            }
         }
         else
             TLogger.LogInfo("不足两个SceneUI");
@@ -57,18 +65,38 @@ public class ZZSceneManager : UnitySingleton<ZZSceneManager>
                 Transform scene = Instantiate(sceneGo,sceneB).transform;
                 scene.name = sName;
                 sceneWareHouse.Add(sceneName);
-                currentScene = scene;
+                currentScene = sceneB;
                 //添加脚本
                 var sceneScript = Type.GetType(sName);
-                ZZUISceneBase aa = scene.SearchGet<Transform>(sName).gameObject.AddComponent(sceneScript) as ZZUISceneBase;
+                ZZUISceneBase aa = scene.gameObject.AddComponent(sceneScript) as ZZUISceneBase;
                 aa.enabled = false;
+                //绑定事件
+                BindingEvent(scene);
                 //脚本赋值
                 aa.objs = objs;
                 aa.ac = action;
                 aa.enabled = true;
             });
         });
+    }
 
+    public void BindingEvent(Transform parent){
+        Transform[] children = parent.GetComponentsInChildren<Transform>();
+        foreach (var item in children)
+        {
+            if(item.name.StartsWith("Btn_")){
+                UIEventListener ul = item.GetOrAddComponent<UIEventListener>();
+                ul.OnClick += ()=>{parent.GetComponent<ZZUISceneBase>().OnClicks(item);};
+                //通过预添加脚本来加载更多的效果
+                UIAniUtil uau = item.GetComponent<UIAniUtil>();
+                if(uau){
+                    ul.uiAniType = uau.IANITYPE;
+                    ul.enterReplaceImg = uau.replaceImg;
+                    ul.textColor = uau.textColor;
+                    ul.imageColor = uau.imageColor;
+                }
+            }
+        }     
     }
     
     //显示当前Scene
