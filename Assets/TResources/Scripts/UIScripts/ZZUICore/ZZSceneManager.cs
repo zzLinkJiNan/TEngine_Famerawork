@@ -35,15 +35,7 @@ public class ZZSceneManager : UnitySingleton<ZZSceneManager>
         {
             //scene1 scene2 
             ChooseScene(sceneWareHouse[sceneWareHouse.Count-2],action,objs);
-            foreach (var item in sceneWareHouse)
-            {
-                TLogger.LogInfo("xx : "+item.ToString());
-            }
             sceneWareHouse.RemoveRange(sceneWareHouse.Count-2,2);
-            foreach (var item in sceneWareHouse)
-            {
-                TLogger.LogInfo(item.ToString());
-            }
         }
         else
             TLogger.LogInfo("不足两个SceneUI");

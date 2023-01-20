@@ -164,6 +164,10 @@ public class UIEventListener : MonoBehaviour,
 
                 sq.Append(rt.DOScale(Vector3.one * 1.2f, 0.1f));
 
+                sq.Append(rt.DOScale(Vector3.one, 0.1f));
+
+                sq.OnComplete(()=>{rt.localScale = Vector3.one;});
+
                 break;
             case UIANITYPE.放上_加描边和按压:
             case UIANITYPE.放上加描边:

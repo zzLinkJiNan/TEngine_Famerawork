@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class Scene_MyMainScene : ZZUISceneBase
 {
     //----------成员组件 | 变量-----------
-    UIEventListener Btn_点击按钮1;Image Img_image1;
+    UIEventListener Btn_点击按钮1;
     //----------↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑-----------
 
     //初始化配置
@@ -30,7 +30,6 @@ public class Scene_MyMainScene : ZZUISceneBase
     public override void SetModles()
     {
         Btn_点击按钮1 = skinTr.SearchGet<UIEventListener>("Btn_点击按钮1");
-Img_image1 = skinTr.SearchGet<Image>("Img_image1");
 
     }
 
@@ -53,7 +52,10 @@ Img_image1 = skinTr.SearchGet<Image>("Img_image1");
         switch (btnClick.name)
         {
             case "Btn_点击按钮1":
-                Debug.Log(11);
+                Debug.Log(Btn_点击按钮1);
+            break;
+            case "Btn_进入另一个Scene":
+                ZZSceneManager.Instance.ChooseScene(ZZSceneName.Scene_Ttest);
             break;
         }
     }

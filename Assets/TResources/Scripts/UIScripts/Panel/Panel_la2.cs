@@ -1,21 +1,22 @@
 ﻿using System.Collections;
+
 using System.Collections.Generic;
 using UnityEngine;
 using TEngine.Runtime;
 using DG.Tweening;
 using UnityEngine.UI;
 
-public class Panel_start : ZZUIPanelBase
+public class Panel_la2 : ZZUIPanelBase
 {
     //----------成员组件 | 变量-----------
-
+    UIEventListener Btn_Close;UIEventListener Btn_clickk;
     //----------↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑-----------
 
     //初始化配置
     public override void IniDeploy()
     {
-        maskIsOn = false; //遮罩是否打开
-        maskColor = new Color(0,0,0,0); //遮罩颜色 RGBA : 0~1
+        maskIsOn = true; //遮罩是否打开
+        maskColor = new Color(0,0,0,0.8f); //遮罩颜色 RGBA : 0~1
         clickClose = false; //点击其他地方关闭当前panel
         base.IniDeploy();
     }
@@ -30,6 +31,8 @@ public class Panel_start : ZZUIPanelBase
     //组件赋值
     public override void SetModles()
     {
+		Btn_Close = skinTr.SearchGet<UIEventListener>("Btn_Close");
+		Btn_clickk = skinTr.SearchGet<UIEventListener>("Btn_clickk");
 
     }
 
@@ -49,15 +52,19 @@ public class Panel_start : ZZUIPanelBase
     //点击事件装载
     public override void OnClicks(Transform btnClick)
     {
-        OnClose();
         switch (btnClick.name)
         {
-                        
+			case "Btn_Close":
+				OnClose();
+			break;
+			case "Btn_clickk":
+				
+			break;
+	
         }
     }
 
-
-    //Scene完成显示后
+    //Panel完成显示后
     public override void OnShowed()
     {
         base.OnShowed();

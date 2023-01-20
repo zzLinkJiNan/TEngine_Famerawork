@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ZZUIPanelBase : ZZUIPanelPort
+public class ZZUIMaskBase : ZZUIMaskPort
 {
     private void Start() {Ini();}
     private void Update() {OnUpdateUI();}
@@ -18,35 +18,16 @@ public class ZZUIPanelBase : ZZUIPanelPort
         OnShowed();
     }
 
-    //初始化panel配置
     public override void IniDeploy()
     {
         skinTr = transform;
-        mainMask = transform.parent.Find("mainMask").GetComponent<Image>();
-        mainMask.color = maskColor;
-        mainMask.enabled = maskIsOn;
-        if(clickClose){
-            UIEventListener uel = mainMask.gameObject.GetOrAddComponent<UIEventListener>();
-            uel.OnClick += ()=>{OnClose();};
-            uel.uiAniType = UIANITYPE.NONE;
-        }
+        CG = gameObject.AddComponent<CanvasGroup>();
+        CG.alpha = CGAlpha;
     }
 
     public override void Iniparameter()
     {
         
-    }
-
-    //panelmanager中管理
-    public override void OnHideUI()
-    {
-
-    }
-    
-    //panelmanager中管理
-    public override void OnShowUI()
-    {
-
     }
 
     public override void OnUpdateUI()
@@ -69,10 +50,8 @@ public class ZZUIPanelBase : ZZUIPanelPort
         
     }
 
-    public override void OnClose()
-    {
-        Destroy(transform.parent.gameObject);
-        ZZPanelManager.Instance.removePanelDicOne(transform.name);
+    public override void OnClose(){
+        Destroy(skinTr.gameObject);
     }
 
     public override void OnClicks(Transform btnClick)
@@ -84,6 +63,4 @@ public class ZZUIPanelBase : ZZUIPanelPort
             break;
         }
     }
-
-    
 }

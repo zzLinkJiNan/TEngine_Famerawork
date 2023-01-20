@@ -1,15 +1,23 @@
 ﻿public enum ZZSceneName{
-        Scene_Test,
-        TestName,
-        Scene_Ttest,
+Scene_Ttest,
 Scene_MyMainScene,
 SLastFind,
 }
 
 public enum ZZPanelName{
-        TestName,
 Panel_lalala,
+Panel_la2,
 PLastFind,
+}
+
+public enum ZZMaskName{
+Mask_Usual,
+MLastFind,
+}
+
+public enum ZZTipName{
+Tip_Usual,
+TLastFind,
 }
 
 

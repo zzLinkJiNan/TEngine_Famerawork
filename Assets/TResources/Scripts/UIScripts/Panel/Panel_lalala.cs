@@ -15,8 +15,8 @@ public class Panel_lalala : ZZUIPanelBase
     //初始化配置
     public override void IniDeploy()
     {
-        maskIsOn = true; //遮罩是否打开
-        maskColor = new Color(0.5f,0.5f,0.5f,1f); //遮罩颜色 RGBA : 0~1
+        maskIsOn = false; //遮罩是否打开
+        maskColor = new Color(0f,0f,0f,0.2f); //遮罩颜色 RGBA : 0~1
         clickClose = true; //点击其他地方关闭当前panel
         base.IniDeploy();
     }
